@@ -4,6 +4,8 @@
 
 ## 使用
 
+**[下载 Windows x64 免安装包](https://github.com/duyingg/Atractylodes_Sticky_Notes/releases/latest)**
+
 完整解压 Windows x64 免安装包后运行 `白术便签.exe`。任务、便签和设置保存在 `%LOCALAPPDATA%\Memo\state.json`，`state.json.bak` 保留上一份有效快照。也可以阅读[详细使用说明](src/Memo.Desktop/使用说明.md)。
 
 ## 构建和测试
