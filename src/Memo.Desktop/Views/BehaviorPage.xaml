@@ -1,0 +1,27 @@
+<UserControl x:Class="Memo.Desktop.Views.BehaviorPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="0,0,3,0">
+            <TextBlock Text="程序行为" Style="{StaticResource PageTitle}" Margin="0,0,0,16"/>
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Text="进程优先级" Style="{StaticResource CardTitle}" Margin="0,0,0,8"/>
+                    <TextBlock x:Name="CurrentPriority" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="ProcessDetails" Foreground="{DynamicResource Muted}" FontSize="12" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                    <WrapPanel Margin="0,10,0,0">
+                        <ComboBox x:Name="PriorityPicker" Width="156" MinHeight="34" Margin="0,0,8,6"
+                                  VerticalContentAlignment="Center" DisplayMemberPath="Label" SelectedValuePath="Value"
+                                  AutomationProperties.Name="选择进程优先级" IsEnabled="{Binding CanEdit}"/>
+                        <Button Content="应用优先级" Click="ApplyPriority" Style="{StaticResource Primary}" Margin="0,0,8,6"
+                                IsEnabled="{Binding CanEdit}"/>
+                        <Button Content="刷新当前状态" Click="RefreshPriority" Margin="0,0,8,6"/>
+                        <Button Content="打开任务管理器" Click="OpenTaskManager" Margin="0,0,0,6"/>
+                    </WrapPanel>
+                    <TextBlock x:Name="PriorityFeedback" Visibility="Collapsed" TextWrapping="Wrap" FontSize="12" Margin="0,2,0,0"
+                               AutomationProperties.LiveSetting="Polite"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

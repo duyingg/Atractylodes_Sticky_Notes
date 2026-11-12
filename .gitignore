@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+.artifacts/
+.qa/
+.vs/
+release/
+window-probe.log
+/desktop.ini
+/.folder-custom.ico
+/交接.md
+/设置页文案.md
+/项目技术方案.md

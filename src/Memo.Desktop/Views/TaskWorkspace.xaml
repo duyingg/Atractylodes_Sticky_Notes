@@ -1,0 +1,79 @@
+<UserControl x:Class="Memo.Desktop.Views.TaskWorkspace"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:Memo.Desktop.Views">
+    <Grid>
+        <Grid x:Name="ListPage">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Margin="0,0,0,20">
+                <TextBlock Text="任务管理" Style="{StaticResource PageTitle}" Margin="0,0,140,0"/>
+                <Button x:Name="AddButton" Style="{StaticResource Primary}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                        MinWidth="124" Height="40" Margin="0,3,0,0" Click="Add" IsEnabled="{Binding CanEditTasks}"
+                        AutomationProperties.Name="新增任务">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Style="{StaticResource Glyph}" Data="{StaticResource PlusIcon}" Stroke="{DynamicResource OnAccent}" Margin="0,0,8,0"/>
+                        <TextBlock Text="新增任务" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <DockPanel Grid.Row="1" Margin="0,0,0,17">
+                <Border Background="{DynamicResource Light}" BorderBrush="{DynamicResource Edge}" BorderThickness="1"
+                        CornerRadius="8" Padding="3" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton x:Name="AllFilter" Style="{StaticResource FilterChoice}" GroupName="Filter"
+                                     Tag="All" IsChecked="True" Checked="FilterChanged">
+                            <TextBlock Text="{Binding Tasks.Length, StringFormat='全部 {0}'}"/>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource FilterChoice}" GroupName="Filter"
+                                     Tag="Open" Checked="FilterChanged">
+                            <TextBlock Text="{Binding Remaining, StringFormat='待办 {0}'}"/>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource FilterChoice}" GroupName="Filter"
+                                     Tag="Completed" Checked="FilterChanged">
+                            <TextBlock Text="{Binding Completed, StringFormat='已完成 {0}'}"/>
+                        </RadioButton>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+            <Border Grid.Row="2" Background="{DynamicResource Wash}" CornerRadius="7" Height="36" Margin="0,0,0,6" Padding="15,0">
+                <DockPanel TextElement.Foreground="{DynamicResource Second}" TextElement.FontWeight="SemiBold" TextElement.FontSize="13">
+                    <TextBlock Text="状态" DockPanel.Dock="Left" Width="30" VerticalAlignment="Center"/>
+                    <TextBlock Text="操作" DockPanel.Dock="Right" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="任务" VerticalAlignment="Center"/>
+                </DockPanel>
+            </Border>
+            <views:TaskList x:Name="Tasks" Grid.Row="3"/>
+            <DockPanel Grid.Row="4" Margin="0,9,0,0" Visibility="{Binding TaskReadOnly, Converter={StaticResource VisibleWhenTrue}}">
+                <TextBlock Style="{StaticResource Caption}">
+                    <Run Text="{Binding TaskPermissionHint, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Hyperlink Click="OpenPermissions" Foreground="{DynamicResource Accent}">权限设置</Hyperlink>
+                </TextBlock>
+            </DockPanel>
+        </Grid>
+        <Grid x:Name="EditorPage" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="0,0,0,16">
+                <Button x:Name="Back" Style="{StaticResource Quiet}" HorizontalAlignment="Left" Padding="2,0"
+                        Click="CancelEdit" AutomationProperties.Name="返回任务管理">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Style="{StaticResource Glyph}" Data="{StaticResource BackIcon}" Margin="0,0,9,0"/>
+                        <TextBlock Text="返回任务管理" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <TextBlock x:Name="EditorTitle" Style="{StaticResource PageTitle}" Margin="0,8,0,0"/>
+            </StackPanel>
+            <views:TaskForm x:Name="Form" Grid.Row="1"/>
+        </Grid>
+        <views:TaskReader x:Name="Reader" Visibility="Collapsed"/>
+    </Grid>
+</UserControl>

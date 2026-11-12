@@ -1,0 +1,94 @@
+<UserControl x:Class="Memo.Desktop.Views.WeeklySchedulePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="日程表" Style="{StaticResource PageTitle}" Margin="0,0,0,16"/>
+        <ListBox x:Name="Days" Grid.Row="1" DisplayMemberPath="Label" SelectionChanged="DayChanged"
+                 AutomationProperties.Name="星期" Margin="0,0,0,12"
+                 Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Margin" Value="0,0,4,0"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border x:Name="DaySurface" Background="{DynamicResource Light}" BorderBrush="{DynamicResource Edge}"
+                                        BorderThickness="1" CornerRadius="6" Padding="2,8">
+                                    <ContentPresenter HorizontalAlignment="Center" TextElement.Foreground="{DynamicResource Ink}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="DaySurface" Property="Background" Value="{DynamicResource Wash}"/>
+                                        <Setter TargetName="DaySurface" Property="BorderBrush" Value="{DynamicResource Accent}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Style="{StaticResource Card}">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="默认待办" Style="{StaticResource CardTitle}" Margin="0,0,0,10"/>
+                    <ListBox x:Name="Entries" Background="Transparent" BorderThickness="0" SelectionChanged="EntryChanged"
+                             AutomationProperties.Name="默认待办列表" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border x:Name="EntrySurface" Background="{DynamicResource Surface}"
+                                                    CornerRadius="6" Padding="7" Margin="0,0,0,4">
+                                                <ContentPresenter/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="EntrySurface" Property="Background" Value="{DynamicResource Wash}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Text}" Foreground="{DynamicResource Ink}" TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="2" Style="{StaticResource Card}">
+                <DockPanel IsEnabled="{Binding CanEditTasks}">
+                    <TextBlock DockPanel.Dock="Top" Text="待办内容" Style="{StaticResource CardTitle}" Margin="0,0,0,10"/>
+                    <WrapPanel DockPanel.Dock="Bottom" Margin="0,8,0,0">
+                        <Button Content="新增" Click="NewEntry" Margin="0,0,6,4"/>
+                        <Button Content="保存" Click="SaveEntry" Style="{StaticResource Primary}" Margin="0,0,6,4"/>
+                        <Button x:Name="DeleteButton" Content="删除" Click="DeleteEntry" IsEnabled="False" Margin="0,0,0,4"/>
+                    </WrapPanel>
+                    <TextBox x:Name="Input" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="240"
+                             VerticalScrollBarVisibility="Auto" AutomationProperties.Name="默认待办内容"/>
+                </DockPanel>
+            </Border>
+        </Grid>
+        <TextBlock x:Name="Status" Grid.Row="3" Margin="0,8,0,0" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite"/>
+    </Grid>
+</UserControl>

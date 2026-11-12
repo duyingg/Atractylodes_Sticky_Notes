@@ -1,0 +1,15 @@
+<UserControl x:Class="Memo.Desktop.Views.SkinSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <TextBlock Text="皮肤设置" Style="{StaticResource PageTitle}" Margin="0,0,0,16"/>
+        <Border Style="{StaticResource Card}">
+            <StackPanel IsEnabled="{Binding CanEdit}">
+                <RadioButton x:Name="Day" GroupName="Skin" Content="日间模式" Style="{StaticResource NavChoice}"/>
+                <RadioButton x:Name="Night" GroupName="Skin" Content="夜间模式" Style="{StaticResource NavChoice}"/>
+                <Button Content="应用皮肤" Style="{StaticResource Primary}" Click="Apply" HorizontalAlignment="Left" Margin="0,8,0,0"/>
+            </StackPanel>
+        </Border>
+        <TextBlock x:Name="Status" Margin="0,10,0,0" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite"/>
+    </StackPanel>
+</UserControl>

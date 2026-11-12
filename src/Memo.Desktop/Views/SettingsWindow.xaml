@@ -1,0 +1,130 @@
+<Window x:Class="Memo.Desktop.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        xmlns:views="clr-namespace:Memo.Desktop.Views"
+        Title="白术便签 · 设置" Icon="/白术便签;component/Assets/BaizhuMemo.ico" Width="986" Height="680"
+        MinWidth="736" MinHeight="510" WindowStyle="None" Background="{DynamicResource Surface}" Style="{StaticResource {x:Type Window}}"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen" Closing="OnClosing">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="43" CornerRadius="12" GlassFrameThickness="0"
+                            ResizeBorderThickness="6" UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+    <Border Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Edge}" BorderThickness="1" CornerRadius="12">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="44"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="{DynamicResource Edge}" BorderThickness="0,0,0,1" Padding="15,0,10,0">
+                <DockPanel>
+                    <Button DockPanel.Dock="Right" Content="收起到托盘" MinHeight="30" Padding="10,3"
+                            VerticalAlignment="Center" Click="Minimize"
+                            shell:WindowChrome.IsHitTestVisibleInChrome="True"/>
+                    <Button DockPanel.Dock="Right" Content="唤醒栏目" MinHeight="30" Padding="10,3" Margin="0,0,8,0"
+                            VerticalAlignment="Center" Click="WakeClicked"
+                            shell:WindowChrome.IsHitTestVisibleInChrome="True"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}"
+                               Width="24" Height="24" Margin="0,0,9,0"/>
+                        <TextBlock Text="白术便签 · 设置" FontSize="13" Foreground="{DynamicResource Second}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="209"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Background="{DynamicResource Sidebar}" BorderBrush="{DynamicResource Edge}" BorderThickness="0,0,1,0"
+                        CornerRadius="0,0,0,11" Padding="11,13,11,10">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Bottom">
+                            <Border Height="1" Background="{DynamicResource Edge}" Margin="9,4,9,7"/>
+                            <Button Style="{StaticResource Quiet}" Foreground="{DynamicResource Ink}" HorizontalAlignment="Left"
+                                    Click="ExitClicked" AutomationProperties.Name="退出应用">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource ExitIcon}" Stroke="{DynamicResource Second}" Margin="0,0,13,0"/>
+                                    <TextBlock Text="退出应用" FontSize="14" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel>
+                            <TextBlock Text="工作台" Foreground="{DynamicResource Muted}" FontSize="12" FontWeight="SemiBold" Margin="8,9,0,6"/>
+                            <RadioButton x:Name="TasksNav" GroupName="Navigation" Tag="Tasks" Checked="Navigate"
+                                         Style="{StaticResource NavChoice}" AutomationProperties.Name="任务管理">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource ListIcon}" Margin="0,0,13,0"/>
+                                    <TextBlock Text="任务管理" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton GroupName="Navigation" Tag="Schedule" Checked="Navigate" Style="{StaticResource NavChoice}"
+                                         AutomationProperties.Name="日程表">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource CalendarIcon}" Margin="0,0,13,0"/>
+                                    <TextBlock Text="日程表" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <TextBlock Text="设置" Foreground="{DynamicResource Muted}" FontSize="12" FontWeight="SemiBold" Margin="8,11,0,6"/>
+                            <RadioButton GroupName="Navigation" Tag="Layout" Checked="Navigate" Style="{StaticResource NavChoice}"
+                                         AutomationProperties.Name="基础设置">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource LayoutIcon}" Margin="0,0,13,0"/>
+                                    <TextBlock Text="基础设置" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton GroupName="Navigation" Tag="Behavior" Checked="Navigate" Style="{StaticResource NavChoice}"
+                                         AutomationProperties.Name="行为设置">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource ScreenIcon}" Margin="0,0,13,0"/>
+                                    <TextBlock Text="行为设置" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton GroupName="Navigation" Tag="Shortcuts" Checked="Navigate" Style="{StaticResource NavChoice}"
+                                         AutomationProperties.Name="快捷键">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource LayoutIcon}" Margin="0,0,13,0"/>
+                                    <TextBlock Text="快捷键" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton GroupName="Navigation" Tag="Panels" Checked="Navigate" Style="{StaticResource NavChoice}"
+                                         AutomationProperties.Name="便签设置">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource NoteIcon}" Margin="0,0,13,0"/>
+                                    <TextBlock Text="便签设置" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton GroupName="Navigation" Tag="Skin" Checked="Navigate" Style="{StaticResource NavChoice}"
+                                         AutomationProperties.Name="皮肤设置">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource ScreenIcon}" Margin="0,0,13,0"/>
+                                    <TextBlock Text="皮肤设置" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton x:Name="DataNav" GroupName="Navigation" Tag="Data" Checked="Navigate" Style="{StaticResource NavChoice}"
+                                         AutomationProperties.Name="数据与权限">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource StorageIcon}" Margin="0,0,13,0"/>
+                                    <TextBlock Text="数据与权限" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                        </StackPanel>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+                <Grid Grid.Column="1" Margin="26,24,26,22">
+                    <views:TaskWorkspace x:Name="TasksPage"/>
+                    <views:WeeklySchedulePage x:Name="SchedulePage" Visibility="Collapsed"/>
+                    <views:LayoutPage x:Name="LayoutPage" Visibility="Collapsed"/>
+                    <views:BehaviorPage x:Name="BehaviorPage" Visibility="Collapsed"/>
+                    <views:ShortcutPage x:Name="ShortcutPage" Visibility="Collapsed"/>
+                    <views:PanelSettings x:Name="PanelSettings" Visibility="Collapsed"/>
+                    <views:SkinSettings x:Name="SkinSettings" Visibility="Collapsed"/>
+                    <views:DataPage x:Name="DataPage" Visibility="Collapsed"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

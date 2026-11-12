@@ -1,0 +1,17 @@
+<Window x:Class="Memo.Desktop.Views.NoteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="白术便签 · 便签栏" Width="320" Height="320" Style="{StaticResource {x:Type Window}}"
+        WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False" ShowActivated="False"
+        Background="{DynamicResource Paper}">
+    <Border x:Name="Frame" BorderBrush="{DynamicResource Edge}" BorderThickness="1" Padding="9">
+        <Grid>
+            <TextBox x:Name="Editor" AutomationProperties.Name="便签内容" AcceptsReturn="True" AcceptsTab="True"
+                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                     Background="{DynamicResource Paper}" BorderThickness="0" Padding="4"
+                     FontSize="{Binding Display.FontSize, FallbackValue=13}" IsReadOnly="{Binding HasWarning}"
+                     TextChanged="DraftChanged" PreviewMouseLeftButtonDown="BeginTyping"/>
+            <Canvas x:Name="Ruling" IsHitTestVisible="False" ClipToBounds="True"/>
+        </Grid>
+    </Border>
+</Window>

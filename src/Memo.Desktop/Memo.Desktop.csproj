@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <!-- The WinForms tray component shares DPI awareness from the WPF application manifest. -->
+    <NoWarn>$(NoWarn);WFO0003</NoWarn>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\BaizhuMemo.ico</ApplicationIcon>
+    <AssemblyName>白术便签</AssemblyName>
+    <Version>0.5.0</Version>
+    <Product>白术便签</Product>
+  </PropertyGroup>
+  <ItemGroup>
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+    <Resource Include="Assets\BaizhuMemo.ico" />
+    <None Update="使用说明.md" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="../../LICENSE" Link="LICENSE" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
